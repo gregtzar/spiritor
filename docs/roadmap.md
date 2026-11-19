@@ -32,8 +32,6 @@ Not designed yet. Treat as direction, not commitments.
 
 ### Transcription
 
-The feature list in `README.md` ("Roadmap Features") is the user-facing version of this list.
-
 - Identifying multiple speakers.
 - Files over 3 hours, by splitting combined with downsampling.
 - Transcript-based editing of audio and video.

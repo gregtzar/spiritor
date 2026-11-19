@@ -19,15 +19,9 @@ Spiritor is a privacy centric and open source toolkit for writers and content cr
 	* Large file (<= 3 hours) support
 	* Optimized downsampling (no file splitting)
 
-## Roadmap Features
+## Roadmap
 
-* Multiple speakers identification
-* Super large file (> 3 hours) support (via file splitting)
-* Support additional audio formats
-* Speech-to-text transcription of video files
-* Transcript-based editing of audio/video files
-* AI assisted recomposition of transcripts and writing
-* Text-to-speech content generation
+Planned features and the order they're being built in are in the [roadmap](docs/roadmap.md).
 
 ## Data Retention Policy
 
