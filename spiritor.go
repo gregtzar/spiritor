@@ -46,9 +46,9 @@ type Context struct {
 }
 
 type ScribeCmd struct {
-	Force   bool     `help:"Force overwrite existing transcripts." short:"f" default:false`
+	Force   bool     `help:"Force overwrite existing transcripts." short:"f" default:"false"`
 	Outputs []string `name:"output" help:"List of output formats." short:"o" default:"txt"`
-	Files   []string `arg name:"file" help:"Target file path(s)." type:"path"`
+	Files   []string `arg:"" name:"file" help:"Target file path(s)." type:"path"`
 }
 
 func (cmd *ScribeCmd) Run(ctx *Context) error {
@@ -161,7 +161,7 @@ func (cmd *ScribeCmd) Run(ctx *Context) error {
 
 var cli struct {
 	Debug  bool      `help:"Enable debug mode."`
-	Scribe ScribeCmd `cmd help:"Generates transcripts for a file."`
+	Scribe ScribeCmd `cmd:"" help:"Generates transcripts for a file."`
 }
 
 func main() {
