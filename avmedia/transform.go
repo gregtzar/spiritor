@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/spiritorai/spiritor/ffmpeg"
+	"github.com/gregtzar/spiritor/ffmpeg"
 )
 
 const (

@@ -1,6 +1,6 @@
 # Developer Notes
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/spiritorai/spiritor.svg)](https://pkg.go.dev/github.com/spiritorai/spiritor)
+[![Go Reference](https://pkg.go.dev/badge/github.com/gregtzar/spiritor.svg)](https://pkg.go.dev/github.com/gregtzar/spiritor)
 
 ## Versioning
 

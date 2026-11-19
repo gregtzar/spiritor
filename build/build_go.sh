@@ -8,7 +8,7 @@
 #  exit 1
 # fi
 
-package=github.com/spiritorai/spiritor
+package=github.com/gregtzar/spiritor
 
 package_split=(${package//\// })
 package_name=${package_split[-1]}

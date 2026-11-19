@@ -8,9 +8,9 @@ import (
 	"strings"
 
 	"github.com/alecthomas/kong"
-	"github.com/spiritorai/spiritor/avmedia"
-	"github.com/spiritorai/spiritor/scribe"
-	"github.com/spiritorai/spiritor/transcribe"
+	"github.com/gregtzar/spiritor/avmedia"
+	"github.com/gregtzar/spiritor/scribe"
+	"github.com/gregtzar/spiritor/transcribe"
 )
 
 /*

@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/spiritorai/spiritor/avmedia"
-	"github.com/spiritorai/spiritor/transcribe"
+	"github.com/gregtzar/spiritor/avmedia"
+	"github.com/gregtzar/spiritor/transcribe"
 )
 
 // Pattern: https://go.dev/play/p/bqisBD1y2hI

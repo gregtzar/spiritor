@@ -12,7 +12,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/spiritorai/spiritor/utils"
+	"github.com/gregtzar/spiritor/utils"
 )
 
 // TODO: The api key is required for whisper. It is read in from API_KEY_OPENAI by

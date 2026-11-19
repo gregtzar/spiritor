@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/gregtzar/spiritor/neurosnaptrainingdata"
 	"github.com/neurosnap/sentences"
-	"github.com/spiritorai/spiritor/neurosnaptrainingdata"
 )
 
 // SplitSentences will use the neurosnap/sentences tokenizer to split the content up into

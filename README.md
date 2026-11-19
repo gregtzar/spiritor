@@ -1,7 +1,7 @@
 # Spiritor AI
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/spiritorai/spiritor)](https://goreportcard.com/report/github.com/spiritorai/spiritor)
-[![Go Reference](https://pkg.go.dev/badge/github.com/spiritorai/spiritor.svg)](https://pkg.go.dev/github.com/spiritorai/spiritor)
+[![Go Report Card](https://goreportcard.com/badge/github.com/gregtzar/spiritor)](https://goreportcard.com/report/github.com/gregtzar/spiritor)
+[![Go Reference](https://pkg.go.dev/badge/github.com/gregtzar/spiritor.svg)](https://pkg.go.dev/github.com/gregtzar/spiritor)
 
 Spiritor is a privacy centric and open source toolkit for writers and content creators utilizing speech-to-text transcription and ai. Think of it as your creative copilot. Rapidly generate content in your own voice and based on your own ideas for:
 
@@ -58,12 +58,12 @@ While the CLI aims to be self-contained into a single binary, we are not quite t
 
 ## Installation
 
-Simply [download the latest release](https://github.com/spiritorai/spiritor/releases) for your operating system, and then add the binary to your system path so that it can be executed from any folder.
+Simply [download the latest release](https://github.com/gregtzar/spiritor/releases) for your operating system, and then add the binary to your system path so that it can be executed from any folder.
 
 Alternatively if you have go install you can just build the module directly:
 
 ```
-go install github.com/spiritorai/spiritor@latest
+go install github.com/gregtzar/spiritor@latest
 ```
 
 ## Commands
@@ -138,7 +138,7 @@ All commands will support a `--debug` flag which will enable detailed console ou
 Developers may simply import the latest module for inclusion in your go project:
 
 ```sh
-go get github.com/spiritorai/spiritor
+go get github.com/gregtzar/spiritor
 ```
 
 Please note the module version is currently `v0.x.x` which means contracts may be **unstable** and breaking changes may be introduced. Please bind to a specific module version and/or use vendoring in your projects.
