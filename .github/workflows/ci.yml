@@ -1,0 +1,32 @@
+# The failsafe behind the agent hook and the check-in procedure: it runs the same
+# check command people and agents run (see spec 0001), and never changes files.
+name: CI
+
+on:
+  # Runs on main as well, so the README badge shows main's status.
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    # The main ruleset requires this name as a status check; renaming it breaks the ruleset.
+    name: check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
+        with:
+          # go.mod's go line has no patch number, so this installs the latest patch release.
+          go-version-file: go.mod
+          cache-dependency-path: |
+            go.sum
+            tools/*.sum
+      - run: build/check.sh

@@ -1,6 +1,6 @@
 # Spiritor AI
 
-[![Go Report Card](https://goreportcard.com/badge/github.com/gregtzar/spiritor)](https://goreportcard.com/report/github.com/gregtzar/spiritor)
+[![CI](https://github.com/gregtzar/spiritor/actions/workflows/ci.yml/badge.svg)](https://github.com/gregtzar/spiritor/actions/workflows/ci.yml)
 [![Go Reference](https://pkg.go.dev/badge/github.com/gregtzar/spiritor.svg)](https://pkg.go.dev/github.com/gregtzar/spiritor)
 
 Spiritor is a privacy centric and open source toolkit for writers and content creators utilizing speech-to-text transcription and ai. Think of it as your creative copilot. Rapidly generate content in your own voice and based on your own ideas for:

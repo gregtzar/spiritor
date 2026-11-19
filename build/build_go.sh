@@ -2,11 +2,9 @@
 
 # Source: https://www.digitalocean.com/community/tutorials/how-to-build-go-executables-for-multiple-platforms-on-ubuntu-16-04
 
-# package=$1
-# if [[ -z "$package" ]]; then
-#  echo "usage: $0 <package-name>"
-#  exit 1
-# fi
+# Usage: build_go.sh [output directory]
+# Writes one binary per platform into the output directory, by default the current one.
+output_dir=${1:-.}
 
 package=github.com/gregtzar/spiritor
 
@@ -26,7 +24,7 @@ do
 	fi	
 
 	# -trimpath keeps the build machine's file paths out of the published binaries.
-	env GOOS=$GOOS GOARCH=$GOARCH go build -trimpath -o $output_name $package
+	env GOOS=$GOOS GOARCH=$GOARCH go build -trimpath -o "$output_dir/$output_name" $package
 	if [ $? -ne 0 ]; then
    		echo 'An error has occurred! Aborting the script execution...'
 		exit 1

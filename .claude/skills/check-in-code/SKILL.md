@@ -5,7 +5,7 @@ description: "The procedure for checking in code in this repo. Use before every 
 
 # Check in code
 
-The workflow is decision 0002. Checks will be enforced by tools once spec 0001 builds them; this procedure covers what needs judgment.
+The workflow is decision 0002. Checks are enforced by tools (see spec 0001); this procedure covers what needs judgment.
 
 - Commit and push only when the maintainer you work for has asked for it.
 - Steps marked **checkpoint** each need that maintainer's explicit okay in the current session, one okay per operation (see decision 0003).
@@ -15,10 +15,10 @@ The workflow is decision 0002. Checks will be enforced by tools once spec 0001 b
 
 1. **Branch.** Work on a feature branch from an up-to-date `main`, named as a short kebab-case description. Never commit to `main`.
 2. **Documentation.** Apply "Keeping documentation current" in `AGENTS.md` to this change: `docs/architecture.md`, `README.md` if users see the change, the spec's status and implementation notes, decision records, conventions.
-3. **Checks.** Until spec 0001 adds a single check command, run `gofmt -l $(git ls-files '*.go' ':!:vendor/')` (must print nothing), `go vet ./...`, `go test ./...` and `go build ./...`. Fix every failure at its cause.
-4. **Review.** Read `git status` and the full diff. Stage files by name, and confirm nothing staged is a secret, a build output or unrelated to the change. Dependency changes (`go.mod`, `go.sum`, `vendor/`) go in their own commit.
+3. **Checks.** Run `build/check.sh`. Fix every failure at its cause.
+4. **Review.** Read `git status` and the full diff. Stage files by name, and confirm nothing staged is a secret, a build output or unrelated to the change.
 5. **Commit.** Write an imperative subject line that says what changed, and a body only if the reason isn't obvious. Add the attribution trailer your tool requires. A branch may hold several commits; the merge squashes them.
-6. **Push and open a pull request into `main`.** `GIT_TERMINAL_PROMPT=0 git push -u origin <branch>`, then `gh pr create --base main`. The title and description become the squashed commit's subject and body, and later the source of the release notes, so write them as a commit message: what changed and why, readable without the diff. Once CI exists, wait for it: `gh pr checks <number> --watch --fail-fast`.
+6. **Push and open a pull request into `main`.** `GIT_TERMINAL_PROMPT=0 git push -u origin <branch>`, then `gh pr create --base main`. The title and description become the squashed commit's subject and body, and later the source of the release notes, so write them as a commit message: what changed and why, readable without the diff. Wait for CI: `gh pr checks <number> --watch --fail-fast`.
 7. **Merge (checkpoint).** If `main` moved, merge it into the branch first (`git fetch origin && git merge origin/main`), resolve any conflicts in that merge commit, push, and wait for CI again. Merging rather than rebasing keeps the branch's history intact, so it needs no force push; the squash drops the merge commit. Then `gh pr merge <number> --squash --delete-branch --subject "<title> (#<number>)" --body "<body>"`. Write the body for the change as a whole, ending with the attribution trailers, because GitHub's default body joins every commit message on the branch, review fixes included.
 
 ## A release (checkpoint)

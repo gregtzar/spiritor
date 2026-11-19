@@ -1,0 +1,15 @@
+# golangci-lint configuration: https://golangci-lint.run/docs/configuration/file/
+version: "2"
+
+linters:
+  # The standard set: errcheck, govet, ineffassign, staticcheck, unused.
+  default: standard
+  exclusions:
+    # Ignores unchecked errors from cleanup calls such as Close and os.RemoveAll,
+    # where nothing useful can be done with the error.
+    presets:
+      - std-error-handling
+
+formatters:
+  enable:
+    - gofmt

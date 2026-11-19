@@ -21,7 +21,7 @@ Each fact has one home. Read the relevant file before acting rather than assumin
 
 - Run commands from the repo root.
 - A maintainer's agent runs Git and the GitHub CLI as its own GitHub App, never with a person's credentials or a stored `gh auth login` (see decision 0001). How it gets App tokens is set up outside this repo.
-- Standard commands (build, install, vendor) are in `DEVELOPMENT.md`. This section holds only agent-specific commands.
+- Standard commands (check, build, install, dependencies) are in `DEVELOPMENT.md`. This section holds only agent-specific commands.
 
 ## Branch and release rules
 
