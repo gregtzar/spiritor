@@ -20,7 +20,7 @@ A Go CLI, `spiritor`, with one command, `scribe`, which batch-transcribes audio 
 - `utils/`: sentence splitting, using `github.com/neurosnap/sentences`.
 - `neurosnaptrainingdata/`: the English training data for the sentence splitter, embedded with `embed`.
 - `vendor/`: vendored dependencies (Kong, sentences).
-- `build/build_go.sh`: cross-compiles release binaries for Linux, macOS and Windows into `build/`; the binaries are ignored by Git.
+- `build/build_go.sh`: cross-compiles release binaries for Linux, macOS and Windows into `build/`, with `-trimpath` so they carry no build machine paths; the binaries are ignored by Git.
 
 ## External dependencies at run time
 
@@ -33,7 +33,10 @@ None are automated yet: no tests, no linter, no Git hook and no CI (see spec 000
 
 ## Source control and access
 
-- Public GitHub repo `gregtzar/spiritor`, moved from the `spiritorai` organization (see decision 0005); GitHub redirects the old URL. Default branch `main`; no rulesets.
+- Public GitHub repo `gregtzar/spiritor`, moved from the `spiritorai` organization (see decision 0005); GitHub redirects the old URL. Default branch `main`.
+- Pull requests merge by squash only; the squashed commit takes the pull request's title and description.
+- Rulesets: `main` blocks deletion and force pushes; `release-tags` blocks updating or deleting `v*` tags, so a published version never changes under the Go module proxy. No status check is required yet, since there is no CI.
+- Each release is a semver tag and a GitHub release with notes and the binaries from `build/build_go.sh` (see decision 0002). The latest is `v0.2.0`.
 - https://spiritor.ai redirects to the repo.
 - Maintainers' agents work as the GitHub App `micromason-agent-prime`, installed on this repo with Contents, Pull requests and Workflows read/write, and Actions, Checks and Commit statuses read (see decision 0001).
 - `.claude/settings.json` stops Claude Code skipping Git hooks, and allows force pushes only with `--force-with-lease`.

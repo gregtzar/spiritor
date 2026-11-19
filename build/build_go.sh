@@ -25,7 +25,8 @@ do
 		output_name+='.exe'
 	fi	
 
-	env GOOS=$GOOS GOARCH=$GOARCH go build -o $output_name $package
+	# -trimpath keeps the build machine's file paths out of the published binaries.
+	env GOOS=$GOOS GOARCH=$GOARCH go build -trimpath -o $output_name $package
 	if [ $? -ne 0 ]; then
    		echo 'An error has occurred! Aborting the script execution...'
 		exit 1

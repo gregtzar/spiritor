@@ -18,14 +18,19 @@ The workflow is decision 0002. Checks will be enforced by tools once spec 0001 b
 3. **Checks.** Until spec 0001 adds a single check command, run `gofmt -l $(git ls-files '*.go' ':!:vendor/')` (must print nothing), `go vet ./...`, `go test ./...` and `go build ./...`. Fix every failure at its cause.
 4. **Review.** Read `git status` and the full diff. Stage files by name, and confirm nothing staged is a secret, a build output or unrelated to the change. Dependency changes (`go.mod`, `go.sum`, `vendor/`) go in their own commit.
 5. **Commit.** Write an imperative subject line that says what changed, and a body only if the reason isn't obvious. Add the attribution trailer your tool requires. A branch may hold several commits; the merge squashes them.
-6. **Push and open a pull request into `main`.** `GIT_TERMINAL_PROMPT=0 git push -u origin <branch>`, then `gh pr create --base main`. The title becomes the squashed commit's subject, so write it the same way. Once CI exists, wait for it: `gh pr checks <number> --watch --fail-fast`.
+6. **Push and open a pull request into `main`.** `GIT_TERMINAL_PROMPT=0 git push -u origin <branch>`, then `gh pr create --base main`. The title and description become the squashed commit's subject and body, and later the source of the release notes, so write them as a commit message: what changed and why, readable without the diff. Once CI exists, wait for it: `gh pr checks <number> --watch --fail-fast`.
 7. **Merge (checkpoint).** If `main` moved, merge it into the branch first (`git fetch origin && git merge origin/main`), resolve any conflicts in that merge commit, push, and wait for CI again. Merging rather than rebasing keeps the branch's history intact, so it needs no force push; the squash drops the merge commit. Then `gh pr merge <number> --squash --delete-branch --subject "<title> (#<number>)" --body "<body>"`. Write the body for the change as a whole, ending with the attribution trailers, because GitHub's default body joins every commit message on the branch, review fixes included.
 
 ## A release (checkpoint)
 
-1. Confirm `main`'s head passed CI, and choose the version by semver: while the major version is `v0`, a breaking change bumps the minor version.
-2. `git fetch origin && git tag -a v<version> origin/main -m "v<version>"`, then `GIT_TERMINAL_PROMPT=0 git push origin v<version>`.
-3. Release binaries and notes are not automated yet; tell the maintainer the tag is pushed.
+A release is a tag and a GitHub release page with notes and binaries. The maintainer's okay covers both.
+
+1. **Version.** Confirm `main`'s head passed CI, and choose the version by semver: while the major version is `v0`, a breaking change bumps the minor version.
+2. **Notes.** Read what changed since the last release with `git log <previous tag>..origin/main`; each commit is a squashed pull request. Write the notes for users, not contributors: a short summary, then breaking changes with what users must do, then other changes. Summarize internal-only changes in one line or leave them out.
+3. **Tag.** `git fetch origin && git tag -a v<version> origin/main -m "v<version>"`, then `GIT_TERMINAL_PROMPT=0 git push origin v<version>`.
+4. **Binaries.** With the tag checked out (`git switch --detach v<version>`), run `./build_go.sh` from `build/`.
+5. **Publish.** `gh release create v<version> --verify-tag --title v<version> --notes-file <notes file> build/spiritor-*`. Uploading takes a few minutes. Then delete the binaries from `build/` and switch back to `main`.
+6. **Confirm.** From outside the repo, `go list -m github.com/gregtzar/spiritor@v<version>` resolves the release through the Go module proxy.
 
 ## Review feedback
 
