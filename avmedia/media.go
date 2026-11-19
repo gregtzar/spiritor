@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/spiritorai/spiritor/ffmpeg"
+	"github.com/gregtzar/spiritor/ffmpeg"
 )
 
 // NewMedia should always be used to initialize a new media struct from outside

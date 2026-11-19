@@ -1,4 +1,4 @@
-module github.com/spiritorai/spiritor
+module github.com/gregtzar/spiritor
 
 go 1.21.6
 
