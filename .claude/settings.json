@@ -2,5 +2,19 @@
   "permissions": {
     "allow": ["Bash(GIT_TERMINAL_PROMPT=0 git push --force-with-lease=*)"],
     "deny": ["Bash(git commit *--no-verify*)", "Bash(git commit -n*)", "Bash(git push *--no-verify*)"]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR/.claude/hooks/format_and_lint_edited_file.sh\"",
+            "timeout": 120
+          }
+        ]
+      }
+    ]
   }
 }

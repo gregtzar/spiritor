@@ -5,7 +5,6 @@ Coding standards for this repo. Anything a tool can enforce (formatting, vetting
 ## Language
 
 - Go, following [Effective Go](https://go.dev/doc/effective_go) and [Go Code Review Comments](https://go.dev/wiki/CodeReviewComments). Where those and the rules below disagree, the Go guidance wins.
-- Code is formatted with `gofmt`.
 - Wrap errors with `%w` so callers can inspect them with `errors.Is` and `errors.As`. Existing code wraps with `%v` in places; fix it when touching that code.
 - Long-running and network work takes a `context.Context` as its first parameter and honors cancellation.
 - No package-level `init` side effects that read the environment or exit; read configuration in `main` or a command and pass it down explicitly. `transcribe/whisper.go` still reads `API_KEY_OPENAI` in `init`.
@@ -80,7 +79,7 @@ Templates link here rather than repeating this table, because every document cop
 - `spiritor.go` is the CLI entry point: it parses flags with Kong and hands typed values to commands. Command logic lives in packages, not in `main`.
 - Each external system (a model provider, ffmpeg) is wrapped in its own package, an anti-corruption layer in Domain-Driven Design's terms: it translates that system's model into ours at the boundary. Nothing else talks to that system.
 - Model providers implement one Spiritor interface per capability (such as transcription or text generation), so commands never depend on a specific provider (see decision 0004).
-- Dependencies are vendored in `vendor/`. A dependency change goes in its own commit (see `DEVELOPMENT.md`).
+- Dependencies are pinned by `go.mod` and `go.sum`, not vendored. Developer tools are Go tool dependencies, each in its own module file in `tools/` (see decision 0006).
 
 ## Secrets and configuration
 

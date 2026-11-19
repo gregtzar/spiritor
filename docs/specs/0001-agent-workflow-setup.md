@@ -13,8 +13,8 @@ Let coding agents work in this repo safely: under their own GitHub identity, fro
 
 ## Scope
 
-- In scope: the agent docs (`AGENTS.md`, `docs/`), the check-in skill, the repo's location, the App's access, Go tooling and code checks, the Git hook, CI, rulesets and repository settings.
-- Out of scope: new product features; release automation (binaries and release notes), which gets its own spec when needed; cloud agents.
+- In scope: the agent docs (`AGENTS.md`, `docs/`), the check-in skill, the repo's location, the App's access, Go tooling and code checks, CI, rulesets and repository settings.
+- Out of scope: new product features; automating releases, which the check-in skill describes as manual steps; cloud agents.
 
 ## Design
 
@@ -39,41 +39,40 @@ Per decision 0005:
 
 ### 4. Go toolchain and checks
 
-- Raise `go.mod`'s `go` line from `1.21.6` to a supported release, since Go supports only its two newest releases.
-- One command defines what passes, run identically by people, agents, the Git hook and CI: `gofmt` (no changes needed), `go vet`, `go test`, `go build`, plus a linter.
-- Fix what `go vet` reports: three Kong struct tags in `spiritor.go` use Kong's shorthand (`arg`, `cmd`, an unquoted `default:false`), which isn't valid Go struct tag syntax.
-- A Claude Code `PostToolUse` hook in `.claude/settings.json` runs `gofmt` on each `.go` file an agent edits and reports `go vet` errors for its package.
-- **Maintainer:** `.claude/settings.json` sets agents' own permissions, so a maintainer writes and changes it.
+- `go.mod` declares `go 1.26`, the oldest Go release still supported. With no patch number, CI installs the latest 1.26 patch release.
+- Dependencies are not vendored, and golangci-lint and govulncheck are Go tool dependencies in their own module files in `tools/` (decision 0006).
+- `build/check.sh` defines what passes, and people, agents and CI run it unchanged. In order: `go.mod` and `go.sum` are tidy (`go mod tidy -diff`); formatting (`golangci-lint fmt --diff`, with `gofmt`); lint (`golangci-lint run`); tests; release builds for every platform (`build/build_go.sh` into a temporary folder); known vulnerabilities (`govulncheck`). It never changes files.
+- `.golangci.yml` uses golangci-lint's standard linters (errcheck, govet, ineffassign, staticcheck, unused) with its `std-error-handling` exclusion preset, which ignores unchecked errors from cleanup calls such as `Close`.
 
-### 5. Git hook
+### 5. Agent feedback while editing
 
-Runs the check command on every commit, for people and agents, and never changes files.
+- `.claude/hooks/format_and_lint_edited_file.sh`, a Claude Code `PostToolUse` hook, formats each `.go` file an agent edits and reports lint issues in its package back to the agent. It needs `jq`.
+- **Maintainer:** `.claude/settings.json` sets agents' own permissions, so a maintainer adds the hook to it.
+- There is no Git hook: Go has no install step that could set one up without per-clone or per-developer setup. The agent runs `build/check.sh` before each commit, and CI is the failsafe.
 
 ### 6. CI and rulesets
 
-- GitHub Actions job named `check` (rulesets require it by name) on every push to a branch other than `main` and on pull requests: `actions/setup-go` with `go-version-file: go.mod`, then the check command. It never changes files.
-- `.github/rulesets/main.json`, in the format GitHub's ruleset import accepts: deletion and force pushes blocked, `check` required with branches up to date. **Maintainer** imports it, since the App has no Administration permission.
-- **Maintainer:** repository settings: squash merging only, head branches deleted after merge.
+- `.github/workflows/ci.yml`: one job, `check`, on pull requests and pushes to `main`. It installs Go from `go.mod`'s version and runs `build/check.sh`. Running on `main` gives the README badge `main`'s status.
+- `.github/rulesets/` holds both rulesets in the format GitHub's ruleset import accepts. `main` blocks deletion and force pushes and requires `check` with the branch up to date; `release-tags` blocks updating or deleting `v*` tags, with repository admins able to bypass. **Maintainer** applies them, since the App has no Administration permission.
+- **Maintainer:** repository settings: squash merging only, the pull request's title and description as the squashed commit's message, head branches deleted after merge.
 
 ### 7. Contributor docs
 
-Reconcile `DEVELOPMENT.md` with decision 0002 (see open questions), and consider renaming it `CONTRIBUTING.md`, the file GitHub links from new issues and pull requests.
+`DEVELOPMENT.md` follows decision 0002 (squash merges) and decision 0006 (no vendoring), and lists the developer commands.
 
 ## Open questions
 
-- Which Go version to target? Blocks step 4.
-- Linter: `golangci-lint` is the established choice. Its maintainers recommend installing the release binary over `go install` or `go.mod`'s `tool` directive, which conflicts with "all tooling is a project dependency". Pin its version in a committed install script, or use `go tool` anyway? Blocks step 4.
-- Git hook mechanism: Go has no install step that can install a hook the way npm's `prepare` script can, so a committed hook needs per-clone or per-developer setup. Options: (a) each developer sets a global `core.hooksPath` pointing at a dispatcher that runs the repo's committed `.githooks/pre-commit` when one exists; (b) `lefthook`, which needs `lefthook install` in each clone; (c) no Git hook, relying on the Claude Code hook and CI. Blocks step 5.
-- Keep vendoring? Go's module proxy and checksum database make it optional; it costs repo size and a separate commit per dependency change. Blocks nothing.
-- `DEVELOPMENT.md` asks contributors to squash into one commit rebased on `main`, plus a separate commit for vendor changes. A squash merge makes the first unnecessary and merges the second into the change. Which rule wins? Blocks step 7.
+- Rename `DEVELOPMENT.md` to `CONTRIBUTING.md`, the file GitHub links from new issues and pull requests? Blocks nothing.
 
 ## Done when
 
 - The App can push a branch and open a pull request on the repo.
-- One check command passes locally, in the Git hook (if any) and in CI, and the `main` ruleset requires it.
+- `build/check.sh` passes locally and in CI, and the `main` ruleset requires it.
+- The Claude Code hook is in `.claude/settings.json`.
 - `docs/architecture.md` describes the repo's location, checks, CI and agent access as built.
 
 ## Implementation notes
 
-- Steps 1, 2 and 3 are done.
-- The `go vet` struct tag fix in step 4 is done; `--help` output is unchanged.
+- Steps 1, 2 and 3 are done, and the repository settings in step 6.
+- The step 4 work fixed three Kong struct tags that `go vet` rejected; `--help` output is unchanged.
+- golangci-lint's first run found four unchecked errors, all from deferred cleanup calls; the `std-error-handling` preset covers them.
