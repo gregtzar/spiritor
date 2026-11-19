@@ -8,7 +8,9 @@ Spec numbers record creation order; the order of work is the order listed here.
 
 Unfinished work, in order. When a phase's spec is marked `done`, move its line to "Done" in the same change.
 
-None yet. The next phase gets a spec first.
+1. Local transcription — [spec](specs/0002-local-transcription.md)
+2. More audio and video formats — [spec](specs/0003-more-audio-and-video-formats.md)
+3. Semantic search — [spec](specs/0004-semantic-search.md)
 
 ## Done
 
@@ -23,7 +25,6 @@ Not designed yet. Treat as direction, not commitments.
 ### Model providers
 
 - Ollama as the primary provider, local and cloud, with frontier APIs as an explicit opt-in (see decision 0004).
-- Local speech-to-text, so transcription no longer requires OpenAI.
 
 ### Writing pipeline
 
@@ -35,7 +36,6 @@ The feature list in `README.md` ("Roadmap Features") is the user-facing version 
 
 - Identifying multiple speakers.
 - Files over 3 hours, by splitting combined with downsampling.
-- More audio formats, and video files.
 - Transcript-based editing of audio and video.
 - Text-to-speech.
 
