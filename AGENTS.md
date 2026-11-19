@@ -7,7 +7,7 @@ Open source Go toolkit for AI-assisted content generation, starting with writing
 Each fact has one home. Read the relevant file before acting rather than assuming:
 
 - `README.md` — the public landing page: what Spiritor is, how to install and use it. Written for users, not contributors.
-- `DEVELOPMENT.md` — contribution rules and developer commands.
+- `CONTRIBUTING.md` — contribution rules and developer commands.
 - `docs/architecture.md` — what exists and runs today, and nothing planned. Read before any structural change.
 - `docs/glossary.md` — business terms and their meanings. Use these terms in code and docs.
 - `docs/conventions.md` — coding standards and naming rules. Read before writing or changing code.
@@ -21,7 +21,7 @@ Each fact has one home. Read the relevant file before acting rather than assumin
 
 - Run commands from the repo root.
 - A maintainer's agent runs Git and the GitHub CLI as its own GitHub App, never with a person's credentials or a stored `gh auth login` (see decision 0001). How it gets App tokens is set up outside this repo.
-- Standard commands (check, build, install, dependencies) are in `DEVELOPMENT.md`. This section holds only agent-specific commands.
+- Standard commands (check, build, install, dependencies) are in `CONTRIBUTING.md`. This section holds only agent-specific commands.
 
 ## Branch and release rules
 

@@ -1,5 +1,5 @@
 ---
-status: in progress # draft | approved | in progress | done | abandoned
+status: done # draft | approved | in progress | done | abandoned
 date: 2026-11-18 # created
 ---
 
@@ -58,11 +58,11 @@ Per decision 0005:
 
 ### 7. Contributor docs
 
-`DEVELOPMENT.md` follows decision 0002 (squash merges) and decision 0006 (no vendoring), and lists the developer commands.
+`CONTRIBUTING.md`, the file GitHub links from new issues and pull requests, follows decision 0002 (squash merges) and decision 0006 (no vendoring), and lists the developer commands.
 
 ## Open questions
 
-- Rename `DEVELOPMENT.md` to `CONTRIBUTING.md`, the file GitHub links from new issues and pull requests? Blocks nothing.
+None.
 
 ## Done when
 
@@ -73,6 +73,6 @@ Per decision 0005:
 
 ## Implementation notes
 
-- Steps 1, 2 and 3 are done, and the repository settings in step 6.
+- All steps are done. Step 7 renamed `DEVELOPMENT.md` to `CONTRIBUTING.md`.
 - The step 4 work fixed three Kong struct tags that `go vet` rejected; `--help` output is unchanged.
 - golangci-lint's first run found four unchecked errors, all from deferred cleanup calls; the `std-error-handling` preset covers them.
