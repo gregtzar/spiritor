@@ -1,0 +1,6 @@
+# Local environment files; these can hold secrets
+.env
+.env.*
+
+# Per-person Claude Code settings
+.claude/settings.local.json
