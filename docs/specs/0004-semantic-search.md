@@ -13,14 +13,14 @@ A new `search` command that finds content by meaning rather than exact words. De
 
 ## Scope
 
-- In scope: the `search` command, and the Ollama provider it needs, Spiritor's first Ollama integration (decision 0004).
+- In scope: the `search` command, and the Ollama provider it needs, Spiritor's first Ollama integration (decision 0007).
 - Out of scope: to be decided.
 
 ## Design
 
 Not designed yet. Constraints so far:
 
-- Ollama runs the models, local by default; a remote provider only by explicit choice (decision 0004).
+- Ollama runs the models, locally or from Ollama Cloud, as the user configures; Spiritor never switches providers on its own (decision 0007).
 - The Ollama client is its own package behind a Spiritor interface, and its facts and quirks go in `docs/integrations/` (see "Structure" in `docs/conventions.md`).
 
 ## Open questions

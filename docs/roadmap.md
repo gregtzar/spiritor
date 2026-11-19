@@ -24,7 +24,12 @@ Not designed yet. Treat as direction, not commitments.
 
 ### Model providers
 
-- Ollama as the primary provider, local and cloud, with frontier APIs as an explicit opt-in (see decision 0004).
+- Ollama for text generation, local and cloud, alongside frontier APIs the user can choose instead (see decision 0007).
+
+### Transcription providers
+
+- whisper.cpp, for local transcription without Python, on Nvidia, AMD, Apple and Vulkan GPUs (research 0003). Open: whether Spiritor calls the user's installed `whisper-cli` or binds whisper.cpp's shared library from Go without cgo through purego, keeping Spiritor's builds pure Go, and whether the user installs that library or Spiritor downloads or embeds it, which decision 0008 doesn't allow today.
+- Ollama's transcription endpoint, once its audio models mature (research 0002).
 
 ### Writing pipeline
 

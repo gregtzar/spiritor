@@ -1,6 +1,6 @@
 # Spiritor
 
-Open source Go toolkit for AI-assisted content generation, starting with writing: a CLI and importable Go module. Privacy first: it is designed to run locally through Ollama (local models and Ollama Cloud), with frontier model APIs (such as OpenAI and Anthropic) as an explicit opt-in (see decision 0004). There is no website: https://spiritor.ai redirects to the GitHub repo, so `README.md` is the public landing page.
+Open source Go toolkit for AI-assisted content generation, starting with writing: a CLI and importable Go module. Privacy first: every capability can run on the user's own machine, through local engines such as faster-whisper and Ollama, and users choose when to use remote providers such as Ollama Cloud, OpenAI or Anthropic instead (see decision 0007). There is no website: https://spiritor.ai redirects to the GitHub repo, so `README.md` is the public landing page.
 
 ## Where things are documented
 

@@ -9,7 +9,7 @@ date: 2026-11-18 # created
 
 ## Goal
 
-`scribe` accepts the common audio and video formats writers record in, not only `mp3`, `aac` and `wav`, transcribing a video's audio track.
+The OpenAI Whisper API provider accepts the common audio and video formats writers record in, not only `mp3`, `aac` and `wav`, transcribing a video's audio track. Formats are per provider (spec 0002): the faster-whisper provider reads what faster-whisper decodes itself.
 
 ## Scope
 
@@ -22,12 +22,12 @@ Not designed yet. Known so far:
 
 - `avmedia/transform.go` already names `ogg`, `flac`, `mp4`, `mpeg`, `mpga`, `m4a` and `webm`, but only `mp3`, `aac` and `wav` are allowed.
 - `ffmpeg` is already a run-time dependency, and it can read nearly every common format and extract a video's audio track.
+- ffmpeg conversion and downsampling belong to the OpenAI provider only; faster-whisper decodes audio and video itself, through PyAV (spec 0002).
 
 ## Open questions
 
 - Which formats to support. Blocks the design.
 - How a file's format is recognized: by its extension, as now, or by probing its contents with `ffprobe`, which validates the input at the boundary. Blocks the design.
-- Whether files still go through `ffmpeg` before transcription depends on the engine spec 0002 chooses. Blocked by spec 0002.
 
 ## Done when
 

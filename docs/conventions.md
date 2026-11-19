@@ -71,6 +71,7 @@ Templates link here rather than repeating this table, because every document cop
 - Scripts do repeatable work; agents do judgment. Any deterministic step (checks, comparisons, test runs, data extraction, waiting on external state) is a committed script or established tool that reports concisely, never work an agent repeats by reasoning.
 - One way of doing each thing. Before introducing a new pattern or library, check whether the codebase already solves the problem, and follow the existing approach.
 - If a new pattern is genuinely better, add it here and note where the old pattern still exists.
+- Follow the [Twelve-Factor App](https://12factor.net/) where it applies to a command-line tool: configuration in the environment, and providers as attached resources the user sets up (decision 0008).
 - Minimize hidden "magic": prefer explicit code that can be followed by reading it over clever shortcuts, reflection or global state.
 - Fail closed by default: a missing, invalid or unrecognized setting, input or check result denies access and leaves risky behaviour off. Risky behaviour, such as sending user content to a remote provider, turns on only for an exact, explicit value.
 
@@ -78,13 +79,14 @@ Templates link here rather than repeating this table, because every document cop
 
 - `spiritor.go` is the CLI entry point: it parses flags with Kong and hands typed values to commands. Command logic lives in packages, not in `main`.
 - Each external system (a model provider, ffmpeg) is wrapped in its own package, an anti-corruption layer in Domain-Driven Design's terms: it translates that system's model into ours at the boundary. Nothing else talks to that system.
-- Model providers implement one Spiritor interface per capability (such as transcription or text generation), so commands never depend on a specific provider (see decision 0004).
+- Model providers implement one Spiritor interface per capability (such as transcription or text generation), so commands never depend on a specific provider (see decision 0007).
 - Dependencies are pinned by `go.mod` and `go.sum`, not vendored. Developer tools are Go tool dependencies, each in its own module file in `tools/` (see decision 0006).
 
 ## Secrets and configuration
 
 - Spiritor reads API keys from the user's environment at run time (the rule against committing them is in `AGENTS.md`). Never log, print or write a key, including in debug output.
 - Never hard-code environment-specific values (endpoints, keys, model names that differ per setup). Take them from explicit configuration (flags or environment variables), with defaults only where the default is safe: a local endpoint, never a remote one.
+- Every command option can be set with an environment variable and overridden by a flag, so a command runs the same way in a shell, a script or CI. This follows the configuration guidance of the [Twelve-Factor App](https://12factor.net/config); in code it is Kong's `env` tag on the flag. Environment variables are named `SPIRITOR_<COMMAND>_<OPTION>` (`SPIRITOR_SCRIBE_PROVIDER`), and an option shared by several providers keeps one name, with each provider setting its own default. A provider's credentials use the name that provider's own tools use (`OPENAI_API_KEY`). Options move to a config file only when they outgrow this. `API_KEY_OPENAI`, read directly from the environment, and the existing flags, which have no environment variable, don't follow this yet.
 
 ## Comments
 
