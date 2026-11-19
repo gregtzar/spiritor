@@ -14,7 +14,7 @@ date: 2026-11-18 # created
 ## Scope
 
 - In scope: choosing a transcription provider; a faster-whisper provider; moving today's OpenAI Whisper API code behind the same choice, working as it does now; a custom vocabulary; instructions for setting up faster-whisper.
-- Out of scope: other providers, such as whisper.cpp (research 0003), Ollama (research 0002) or a local server; speaker identification; output formats besides `txt`; new formats for the OpenAI path (spec 0003).
+- Out of scope: other providers, such as whisper.cpp (research 0003), Ollama (research 0002) or a local server; speaker identification; output formats besides `txt`; the list of supported formats, shared by both providers (spec 0003).
 
 ## Design
 
