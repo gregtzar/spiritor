@@ -8,11 +8,13 @@ Spec numbers record creation order; the order of work is the order listed here.
 
 Unfinished work, in order. When a phase's spec is marked `done`, move its line to "Done" in the same change.
 
-1. Agent workflow setup — [spec](specs/0001-agent-workflow-setup.md)
+None yet. The next phase gets a spec first.
 
 ## Done
 
 Newest first, with the date each phase was completed.
+
+- 2026-11-18 — Agent workflow setup — [spec](specs/0001-agent-workflow-setup.md)
 
 ## Later (unscheduled)
 

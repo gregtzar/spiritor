@@ -143,4 +143,4 @@ go get github.com/gregtzar/spiritor
 
 Please note the module version is currently `v0.x.x` which means contracts may be **unstable** and breaking changes may be introduced. Please bind to a specific module version and/or use vendoring in your projects.
 
-Contributors please see: [DEVELOPMENT.md](DEVELOPMENT.md).
+Contributors please see: [CONTRIBUTING.md](CONTRIBUTING.md).
