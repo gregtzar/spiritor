@@ -25,6 +25,8 @@ Not designed yet. Treat as direction, not commitments.
 ### Model providers
 
 - Ollama for text generation, local and cloud, alongside frontier APIs the user can choose instead (see decision 0007).
+- An OpenAI Chat Completions provider for semantic search (spec 0004), with the endpoint set by the user. It's the format most hosts copy, so one provider reaches Gemini, xAI, Mistral, Groq, Together, Fireworks, OpenRouter, DeepSeek, Tinfoil and Privatemode, as well as local servers such as vLLM and llama.cpp. It's also how search reaches remote models, because Ollama Cloud doesn't support structured outputs. Hosts support newer fields such as JSON-schema `response_format` unevenly, so each host is checked. Research 0005 covers the hosts' privacy, and research 0006 the models.
+- A native Anthropic provider for Claude. Anthropic's OpenAI compatibility layer is "not considered a long-term or production-ready solution" and silently ignores fields such as `reasoning_effort`.
 
 ### Transcription providers
 
